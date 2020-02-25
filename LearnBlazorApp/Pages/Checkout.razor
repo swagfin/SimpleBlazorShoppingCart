@@ -1,0 +1,46 @@
+﻿@page "/shop/Checkout"
+@using LearnBlazorApp.Services
+@using LearnBlazorApp.Entity
+@inject IShoppingCartService cartService
+<h3>Checkout</h3>
+
+@if (!cartService.CanCheckout())
+{
+    <div class="ui warning message icon">
+        <i class="cart icon"></i>
+        <div class="ui content">
+            <b>No Items Added to Cart</b>
+            <p>Add Items to cart inorder to checkout, You can <a href="/shop">Go to Shopping Page</a> to get started</p>
+        </div>
+    </div>
+}
+else if (products == null)
+{
+    <div class="ui active inverted dimmer">
+        <div class="ui small text loader">Getting Cart Items</div>
+    </div>
+    <p></p>
+}
+else
+{
+    <table class="ui table striped">
+        <thead>
+            <tr><td>Item</td> <td>Rate</td> <td>Quantity</td>  <td>Total</td></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    foreach (var item in products)
+    {
+
+    }
+
+}
+@code{
+
+    private IEnumerable<Product> products;
+    protected override async Task OnInitializedAsync()
+    {
+        products = await cartService.GetCartItemsAsync();
+    }
+}

@@ -1,0 +1,69 @@
+﻿@page "/shop"
+
+@using LearnBlazorApp.Services
+@using LearnBlazorApp.Entity
+@inject IProductService productService
+@inject IShoppingCartService cartService
+
+<h1>Point of Sale</h1>
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (message != null)
+{
+    <div class="ui positive message">
+        <b>@message</b>
+    </div>
+}
+
+
+@if (products == null)
+{
+        <div class="ui active inverted dimmer">
+            <div class="ui small text loader">Retrieving Products</div>
+        </div>
+        <p></p>
+}
+else
+{
+
+    <div class="ui four cards">
+        @foreach (var item in products)
+        {
+            <div class="card">
+                <div class="image">
+                    <img src="/Images/@item.ImageFile">
+                </div>
+                <div class="content">
+                    <div class="header">@item.ProductName</div>
+                    <div class="description">
+                        Code: @item.BarCode <br />
+                        Price @item.SellingPrice
+                    </div>
+                </div>
+                <div class="ui bottom attached button" id="@item.BarCode" @onclick="(()=> AddToCart(item))">
+                    <i class="cart icon"></i>
+                    Add Cart
+                </div>
+            </div>
+        }
+    </div>
+
+}
+
+@code {
+    private IEnumerable<Product> products;
+    private string message = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetAllProductsAsync();
+    }
+
+
+    protected void AddToCart(Product product)
+    {
+        cartService.AddToCart(product);
+        message = string.Format("{0} has been added to Cart", product.ProductName);
+    }
+
+}
