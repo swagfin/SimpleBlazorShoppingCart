@@ -28,13 +28,36 @@ else
             <tr><td>Item</td> <td>Rate</td> <td>Quantity</td>  <td>Total</td></tr>
         </thead>
         <tbody>
+
+            @foreach (var item in products)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.SellingPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * item.SellingPrice)</td>
+                </tr>
+            }
         </tbody>
+        <tr>
+            <td colspan="3"><b>TOTAL ITEMS</b></td>
+            <td>@cartService.GetItemsCountInCart()</td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>TOTAL TAX</b>(Rate @cartService.GetTaxationRate()%)</td>
+            <td>@cartService.GetTotalTax()</td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>TOTAL ITEMS</b></td>
+            <td style="color:red"><b>@cartService.GetTotalCost()</b></td>
+        </tr>
+
+
     </table>
-    foreach (var item in products)
-    {
-
-    }
-
+    <div class="ui fluid button green">
+        <i class="cart icon"></i>
+        Checkout
+    </div>
 }
 @code{
 

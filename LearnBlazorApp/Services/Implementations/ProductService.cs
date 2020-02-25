@@ -91,7 +91,7 @@ namespace LearnBlazorApp.Services.Implementations
         {
             return Task.Run(() =>
            {
-               System.Threading.Thread.Sleep(2000);
+               System.Threading.Thread.Sleep(1200);
                return GetAllProducts();
            });
         }

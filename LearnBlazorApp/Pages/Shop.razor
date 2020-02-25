@@ -18,10 +18,10 @@
 
 @if (products == null)
 {
-        <div class="ui active inverted dimmer">
-            <div class="ui small text loader">Retrieving Products</div>
-        </div>
-        <p></p>
+    <div class="ui active inverted dimmer">
+        <div class="ui small text loader">Retrieving Products</div>
+    </div>
+    <p></p>
 }
 else
 {
@@ -62,6 +62,7 @@ else
 
     protected void AddToCart(Product product)
     {
+        product.Quantity = 1;
         cartService.AddToCart(product);
         message = string.Format("{0} has been added to Cart", product.ProductName);
     }

@@ -1,5 +1,19 @@
-﻿<div class="ui vertical menu fluid" style="border-radius:0;">
+﻿@using LearnBlazorApp.Services
+@inject IShoppingCartService cartService
+
+<div class="ui vertical menu fluid" style="border-radius:0;" @onclick="TrackCartItems">
     <a class="active item" href='/'><i class="home icon"></i>Home</a>
     <a class="active item" href='/shop'><i class="cart icon"></i>Shopping</a>
-    <a class="active item" href='/shop/Checkout'><i class="cart icon"></i>Shopping</a>
+    <a class="active item" href='/shop/Checkout'><i class="cart icon"></i>Checkout(@totalItems)</a>
 </div>
+
+@code
+{
+    private int totalItems = 0;
+
+    void TrackCartItems()
+    {
+        totalItems = cartService.GetItemsCountInCart();
+    }
+
+}
